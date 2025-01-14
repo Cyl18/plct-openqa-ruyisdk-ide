@@ -1,0 +1,15 @@
+{
+    "area": [
+        {
+            "xpos": 29,
+            "height": 310,
+            "type": "match",
+            "width": 80,
+            "ypos": 50
+        }
+    ],
+    "properties": [],
+    "tags": [
+        "desktop-openeuler"
+    ]
+}

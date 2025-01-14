@@ -1,0 +1,1 @@
+rsync -r --progress /root/plct-openqa-ruyisdk-ide geekotest@openqa.inuyasha.love:/var/lib/openqa/share/tests/
