@@ -31,11 +31,23 @@ sub run {
     wait_still_screen 2;
 
     my $ver = get_var('RUYI_SDK_IDE_VERSION');
-    type_string 'mkdir /tmp/repo && git clone https://gitclone.com/github.com/Cyl18/plct-openqa-ruyisdk-ide /tmp/repo && /tmp/repo/scripts/worker/download-and-open-ruyi-ide.sh' . $ver;
+    type_string 'wget https://mirror.iscas.ac.cn/ruyisdk/ide/' . $ver . '/ruyisdk-' .  $ver . '-linux.gtk.riscv64.tar.gz';
+    send_key 'ret';
+
+    type_string 'tar -zxvf ruyisdk-' . $ver . '-linux.gtk.riscv64.tar.gz';
+    send_key 'ret';
+    type_string 'cd ruyisdk';
+    send_key 'ret';
+    
+    type_string 'sudo -c "echo OKAY > /dev/ttyS0"';
+    send_key 'ret';
+    type_string './ruyisdk';
     send_key 'ret';
 
     die "we could not see expected output" unless wait_serial "OKAY", 200;
-    send_key 'alt-f4';
+    
+    assert_screen 'desktop-openeuler', $timeout;
+    assert_screen 'desktop-openeuler', $timeout;
     assert_screen 'desktop-openeuler', $timeout;
     
 
