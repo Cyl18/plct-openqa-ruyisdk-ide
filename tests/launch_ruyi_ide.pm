@@ -1,9 +1,10 @@
-package openEuler_login_test;
+package launch_ruyi_ide;
 use base "basetest";
 use strict;
 use testapi;
 
-
+# select_console 'x11', await_console => 0;
+# select_console 'root-console';
 sub run {
     diag "Starting test...";
 
@@ -13,14 +14,30 @@ sub run {
     if (check_var('FLAVOR', 'openeuler-23.09'))
     {
         assert_screen 'desktop-openeuler', $timeout;
+        
+
     }
     else
     {
         die "no matching flavor found";
     }
+    send_key('alt-f2');
+    wait_still_screen 2;
 
-    assert_script_run 'mkdir /tmp/repo && git clone https://gitclone.com/github.com/Cyl18/plct-openqa-ruyisdk-ide /tmp/repo && /tmp/repo/scripts/worker/download-and-open-ruyi-ide.sh';
+    type_string('xfce4-terminal');
+    wait_still_screen 2;
+    send_key('ret');
+    
+    wait_still_screen 2;
 
+    my $ver = get_var('RUYI_SDK_IDE_VERSION');
+    type_string 'mkdir /tmp/repo && git clone https://gitclone.com/github.com/Cyl18/plct-openqa-ruyisdk-ide /tmp/repo && /tmp/repo/scripts/worker/download-and-open-ruyi-ide.sh' . $ver;
+    send_key 'ret';
+
+    die "we could not see expected output" unless wait_serial "OKAY", 200;
+    send_key 'alt-f4';
+    assert_screen 'desktop-openeuler', $timeout;
+    
 
     # 等待系统启动完成，可以通过检测某个特定的启动标志来实现
     # 例如，等待出现登录界面
