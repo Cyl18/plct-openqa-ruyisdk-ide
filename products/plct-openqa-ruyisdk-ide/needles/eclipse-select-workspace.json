@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "eclipse-select-workspace"
+  ],
+  "area": [
+    {
+      "xpos": 802,
+      "ypos": 523,
+      "width": 125,
+      "height": 35,
+      "type": "match"
+    }
+  ]
+}

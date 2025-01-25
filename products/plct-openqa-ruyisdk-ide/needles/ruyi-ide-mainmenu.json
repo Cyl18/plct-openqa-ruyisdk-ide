@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "ruyi-ide-mainmenu"
+  ],
+  "area": [
+    {
+      "xpos": 110,
+      "ypos": 201,
+      "width": 135,
+      "height": 71,
+      "type": "match"
+    }
+  ]
+}

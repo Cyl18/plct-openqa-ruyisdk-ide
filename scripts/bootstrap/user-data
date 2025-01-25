@@ -1,0 +1,26 @@
+#cloud-config
+password: Cyl18-VYFdEFacx8YLdADQLPO0
+ssh_pwauth: True
+disable_root: False
+ssh_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKDa2Vru/cLuqbl32Wtue/AlPQ3AvjdB3sApqXMQJ44H
+timezone: Asia/Chongqing
+chpasswd:
+  expire: false
+system_info:
+  default_user:
+    name: ubuntu
+    lock_passwd: False
+    gecos: Ubuntu
+    groups: [adm, audio, cdrom, dialout, dip, floppy, lxd, netdev, plugdev, sudo, video]
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    shell: /bin/bash
+    plain_text_passwd: 'Cyl18-VYFdEFacx8YLdADQLPO0'
+package_update: false
+
+runcmd:
+  - printf "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse\ndeb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse\ndeb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse" > /etc/apt/sources.list
+  - rm -f /etc/apt/sources.list.d/*
+#  - 'printf "network:\n  version: 2\n  ethernets:\n    ens2:\n       dhcp4: true" > /etc/netplan/01-netcfg.yaml'
+  - apt update
+  - apt install --no-install-recommends -y nano git python3 ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal tigervnc-standalone-server

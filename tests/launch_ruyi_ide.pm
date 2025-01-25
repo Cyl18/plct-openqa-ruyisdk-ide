@@ -10,45 +10,40 @@ sub run {
 
     my $timeout = 240;
 
-    diag "Checking if desktop is shown";
-    if (check_var('FLAVOR', 'openeuler-23.09'))
-    {
-        assert_screen 'desktop-openeuler', $timeout;
-        
-
-    }
-    else
-    {
-        die "no matching flavor found";
-    }
     send_key('alt-f2');
     wait_still_screen 2;
 
-    type_string('xfce4-terminal');
-    wait_still_screen 2;
+    type_string('gnome-terminal');
+
     send_key('ret');
-    
-    wait_still_screen 2;
+    wait_screen_change {}
 
     my $ver = get_var('RUYI_SDK_IDE_VERSION');
-    type_string 'wget https://mirror.iscas.ac.cn/ruyisdk/ide/' . $ver . '/ruyisdk-' .  $ver . '-linux.gtk.riscv64.tar.gz';
+    type_string 'wget https://mirror.iscas.ac.cn/ruyisdk/ide/' . $ver . '/ruyisdk-' .  $ver . '-linux.gtk.x86_64.tar.gz';
     send_key 'ret';
-
-    type_string 'tar -zxvf ruyisdk-' . $ver . '-linux.gtk.riscv64.tar.gz';
+    
+    type_string 'tar -zxvf ruyisdk-' . $ver . '-linux.gtk.x86_64.tar.gz';
     send_key 'ret';
     type_string 'cd ruyisdk';
     send_key 'ret';
-    
-    type_string 'sudo -c "echo OKAY > /dev/ttyS0"';
+
+    type_string 'echo OKAY | sudo tee /dev/ttyS0';
     send_key 'ret';
+
     type_string './ruyisdk';
     send_key 'ret';
 
+
+
     die "we could not see expected output" unless wait_serial "OKAY", 200;
-    
-    assert_screen 'desktop-openeuler', $timeout;
-    assert_screen 'desktop-openeuler', $timeout;
-    assert_screen 'desktop-openeuler', $timeout;
+
+    assert_screen 'eclipse-select-workspace', $timeout;
+    send_key 'ret'; # select default workspace
+
+    assert_screen 'ruyi-ide-mainmenu', $timeout;
+    #assert_screen 'desktop-openeulur', $timeout;
+    #assert_screen 'desktop-openeulur', $timeout;
+    #assert_screen 'desktop-openeulur', $timeout;
     
 
     # 等待系统启动完成，可以通过检测某个特定的启动标志来实现
